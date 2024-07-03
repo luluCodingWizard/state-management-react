@@ -1,22 +1,49 @@
 import "./App.css";
-import { useState } from "react";
+import { useReducer } from "react";
+
+// step 1: initial state
+const initialState = { score: 0 };
+
+// step 2: define the reducer
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "increase":
+      return {
+        ...state,
+        score: state.score + 1,
+      };
+    case "decrease":
+      return {
+        ...state,
+        score: state.score - 1,
+      };
+    case "reset":
+      return {
+        ...state,
+        score: 0,
+      };
+    default:
+      return state;
+  }
+};
 
 function App() {
-  const [score, setScore] = useState(0);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const increaseScore = () => {
-    setScore(score + 1);
+    dispatch({ type: "increase" });
   };
   const decreaseScore = () => {
-    setScore(score - 1);
+    dispatch({ type: "decrease" });
   };
   const resetScore = () => {
-    setScore(0);
+    dispatch({ type: "reset" });
   };
   return (
     <div className="App">
       <div style={{ textAlign: "center", marginTop: "50px" }}>
         <h1>Clicker Game</h1>
-        <p>Your score: {score}</p>
+        <p>Your score: {state.score}</p>
         <button onClick={increaseScore} style={{ marginRight: "10px" }}>
           Increase Score
         </button>
