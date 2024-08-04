@@ -1,15 +1,20 @@
 import "./App.css";
 import Game from "./components/Game";
-import { GameProvider } from "./GameContext";
+import { Provider } from "react-redux";
+import store from "./store/store";
 import LeaderBoard from "./components/LeaderBoard";
+import ParentB from "./components/ParentB";
+import ParentA from "./components/ParentA";
 
 function App() {
   return (
-    <GameProvider className="App">
+    <Provider store={store} className="App">
       <Game />
       <br />
       <LeaderBoard />
-    </GameProvider>
+      <ParentA />
+      <ParentB />
+    </Provider>
   );
 }
 

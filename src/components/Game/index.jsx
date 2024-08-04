@@ -1,23 +1,28 @@
 import React from "react";
-import { useContext } from "react";
-import { GameContext } from "../../GameContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increase,
+  decrease,
+  reset,
+  fetchHigherScore,
+} from "../../store/scoreSlice";
 
 const Game = () => {
-  const { state, dispatch } = useContext(GameContext);
-
+  const score = useSelector((state) => state.score.score);
+  const dispatch = useDispatch();
   const increaseScore = () => {
-    dispatch({ type: "increase" });
+    dispatch(increase());
   };
   const decreaseScore = () => {
-    dispatch({ type: "decrease" });
+    dispatch(decrease());
   };
   const resetScore = () => {
-    dispatch({ type: "reset" });
+    dispatch(reset());
   };
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Clicker Game</h1>
-      <p>Your score: {state.score}</p>
+      <p>Your score: {score}</p>
       <button onClick={increaseScore} style={{ marginRight: "10px" }}>
         Increase Score
       </button>
@@ -25,6 +30,9 @@ const Game = () => {
         Decrease Score
       </button>
       <button onClick={resetScore}>Reset Score</button>
+      <button onClick={() => dispatch(fetchHigherScore())}>
+        Get higher Score
+      </button>
     </div>
   );
 };
